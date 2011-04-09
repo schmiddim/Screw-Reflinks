@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+if [[  "$2" == "" || "$2" == ""  ]]; then
+	echo "usage: screw-reflinks www.google.de 3"
+	exit -1
+
+fi
+
+for (( i=1; $i <= $2; i++ ))
+
+  do
+	echo $i
+	$(curl --silent --netrc  --output /dev/null $1) 
+	reconnect-wrt54
+	sleep 10
+ done
+
+
+
+
+

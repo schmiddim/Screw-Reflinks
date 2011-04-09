@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+##########################################################################
+# reconnect script for the linksys wrt54gl router#######################
+#autor: ms
+#uses the ~/.netrc file. Create an entry for your router in ~/.netrc
+#example: machine 192.168.0.1 login admin password mypassword
+##################################################################
+
+
+
+function signal()
+{
+	echo catch sigint
+	curl --silent --netrc  --output /dev/null  "http://192.168.0.1/apply.cgi" -d  "submit_button=Status_Router&submit_type=Connect_pppoe&change_action=gozila_cgi&wan_proto=pppoe"
+	exit
+}
+
+
+trap signal SIGINT
+curl --silent --netrc --output /dev/null "http://192.168.0.1/apply.cgi" -d  "submit_button=Status_Router&submit_type=Disconnect_pppoe&change_action=gozila_cgi&wan_proto=pppoe" 
+curl --silent --netrc  --output /dev/null  "http://192.168.0.1/apply.cgi" -d  "submit_button=Status_Router&submit_type=Connect_pppoe&change_action=gozila_cgi&wan_proto=pppoe"
+
